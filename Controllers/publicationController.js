@@ -20,7 +20,7 @@ const upload = multer({ storage: storage });
 const createPublication = async (req, res) => {
   try {
     const { nomProduit, description, prix, type, boutiqueId } = req.body;
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    const imagePath = req.file ? `uploads/${req.file.filename}` : null;
 
     const boutique = await Boutique.findById(boutiqueId);
     if (!boutique) {
