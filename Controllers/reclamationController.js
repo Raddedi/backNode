@@ -4,12 +4,7 @@ const Reclamation = require("../models/reclamation");
 exports.createReclamation = async (req, res) => {
   try {
     const { achat, type, description } = req.body;
-    const reclamation = new Reclamation({
-      achat,
-      type,
-      description,
-      dateReclamation: new Date(),
-    });
+    const reclamation = new Reclamation({ achat, type, description ,dateReclamation : new Date()});
     await reclamation.save();
     res.status(201).json(reclamation);
   } catch (error) {
@@ -19,24 +14,20 @@ exports.createReclamation = async (req, res) => {
 
 // Get all reclamations
 exports.getAllReclamations = async (req, res) => {
-  try {
-    const reclamations = await Reclamation.find().populate({
-      path: "achat",
+    try {
+      const reclamations = await Reclamation.find().populate({path: 'achat',
       populate: {
-        path: "user",
-      },
-    });
-    res.json(reclamations);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+        path: 'user'
+      }});
+      res.json(reclamations);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
 // Get a reclamation by ID
 exports.getReclamation = async (req, res) => {
   try {
-    const reclamation = await Reclamation.findById(req.params.id).populate(
-      "achat"
-    );
+    const reclamation = await Reclamation.findById(req.params.id).populate("achat");
     if (!reclamation) {
       return res.status(404).json({ error: "Reclamation not found" });
     }
